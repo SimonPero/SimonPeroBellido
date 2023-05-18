@@ -1,0 +1,60 @@
+<div id="ejemplo">
+  <section>
+    <ul>
+      {{#each products}}
+      <li>
+        <h3>{{this.title}}</h3>
+        <p>ID: {{this.id}}</p>
+        <p>{{this.description}}</p>
+        <p>Precio: {{this.price}}</p>
+        <p>Código: {{this.code}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Categoría: {{this.category}}</p>
+        <button class="btn-delete" data-id="{{this.id}}">Eliminar</button>
+      </li>
+      {{/each}}
+    </ul>
+  </section>
+ <section>
+  <form id="form-products" style="margin: auto">
+    <div style="margin-bottom: 16px">
+      <div>
+        <label for="title">Titulo:</label>
+        <br />
+        <input type="text" name="title" id="form-title" style="margin-bottom: 16px" class="form-control" />
+      </div>
+      <div>
+        <label for="description">Descripción:</label>
+        <br />
+        <input type="text" name="description" id="form-description" style="margin-bottom: 16px" class="form-control" />
+      </div>
+      <div>
+        <label for="price">Precio:</label>
+        <br />
+        <input type="number" name="price" id="form-price" style="margin-bottom: 16px" step="1" class="input-file" />
+      </div>
+      <div>
+        <label for="code">Código:</label>
+        <br />
+        <input type="text" name="code" id="form-code" style="margin-bottom: 16px" class="input-file" />
+      </div>
+      <div>
+        <label for="stock">Stock:</label>
+        <br />
+        <input type="number" name="stock" id="form-stock" style="margin-bottom: 16px" step="1" />
+      </div>
+      <div>
+        <label for="category">Categoría:</label>
+        <br />
+        <input type="text" name="category" id="form-category" style="margin-bottom: 16px" />
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center">
+        <input type="submit" value="Crear producto" />
+      </div>
+    </div>
+  </form>
+</section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="public/js/index.js"></script>
