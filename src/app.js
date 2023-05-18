@@ -11,7 +11,7 @@ import { realTimeProdsRouters } from "./routes/realtimeprods.router.js";
 
 const container = new ProductManager("./src/productos.json");
 const app = express();
-const port = 8081;
+const port = 8080;
 
 // Create HTTP server
 const httpServer = app.listen(port, () => {
@@ -26,7 +26,8 @@ socketServer.on("connection", (socket) => {
 
   socket.on("new-product", async (title, description, price, code, stock, category) => {
     try {
-      await container.addProduct(title, description, price, code, stock, category);
+      
+      console.log(await container.addProduct(title, description, price, code, stock, category));
       // Update product list after adding a new product
       const productsList = await container.getProducts();
 
@@ -64,4 +65,5 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes
 app.use("/api/products/", productsRouter);
 app.use("/api/carts/", cartsRouter);
-app.use("/homerouter", homeRouter);
+app.use("/", homeRouter);
+app.use("/realtimeproducts", realTimeProdsRouters)
