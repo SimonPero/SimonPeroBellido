@@ -16,7 +16,6 @@ export default class ProductManager {
     }
     async addProduct(title, description, price, code, stock, category) {
         try {
-          console.log(title, description, price, code, stock, category);
           if (!fs.existsSync(this.path)) {
             await fs.promises.writeFile(this.path, "[]");
           }
@@ -165,5 +164,4 @@ export default class ProductManager {
         }
     }
 }
-
 
