@@ -1,8 +1,8 @@
 <div >
-  <section id="ejemplo">
-    <ul>
+  <section >
+    <ul id="ejemplo">
       {{#each products}}
-      <li>
+      <li id="{{this.id}}">
         <h3>{{this.title}}</h3>
         <p>ID: {{this.id}}</p>
         <p>{{this.description}}</p>
@@ -10,13 +10,13 @@
         <p>Código: {{this.code}}</p>
         <p>Stock: {{this.stock}}</p>
         <p>Categoría: {{this.category}}</p>
-        <button class="btn-delete" data-id="{{this.id}}">Eliminar</button>
+        <button class="btn-delete" onclick="deleteProduct('{{this.id}}')">Eliminar</button>
       </li>
       {{/each}}
     </ul>
   </section>
  <section>
-  <form id="" style="margin: auto">
+  <form id="form-products" style="margin: auto">
     <div style="margin-bottom: 16px">
       <div>
         <label for="title">Titulo:</label>
@@ -49,7 +49,7 @@
         <input value="" type="text"  id="form-category" style="margin-bottom: 16px" />
       </div>
       <div style="display: flex; justify-content: center; align-items: center">
-        <input type="submit" value="Crear producto" id="form-products" />
+        <input type="submit" value="Crear producto" id="submit-button" />
       </div>
     </div>
   </form>

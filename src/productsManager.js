@@ -16,55 +16,45 @@ export default class ProductManager {
     }
     async addProduct(title, description, price, code, stock, category) {
         try {
-          if (!fs.existsSync(this.path)) {
-            await fs.promises.writeFile(this.path, "[]");
-          }
-          const fileContent = await fs.promises.readFile(this.path, "utf-8");
-          let content = JSON.parse(fileContent);
-          console.log("Content:", content); // Log the content array to check its structure
-    
-          if (content.some((item) => item.code === code)) {
-            return `Error: Codigo ${code} repetido`;
-          } else if (
-            !title ||
-            !description ||
-            !price ||
-            !code ||
-            !stock ||
-            !category ||
-            typeof title !== "string" ||
-            typeof description !== "string" ||
-            typeof code !== "string" ||
-            typeof category !== "string" ||
-            isNaN(Number(price)) ||
-            isNaN(Number(stock))
-          ) {
-            return "Error: todos los campos son requeridos y deben tener los tipos adecuados";
-          } else {
-            let pid = 0;
-            do {
-              pid = String(Math.round(Math.random() * 100000));
-            } while (content.some((item) => item.id === pid));
-            const product = {
-              title: String(title),
-              description: String(description),
-              price: Number(price),
-              code: String(code),
-              stock: Number(stock),
-              status: true,
-              category: String(category),
-              id: String(pid),
-            };
-    
-            content.push(product);
-            const productsString = JSON.stringify(content);
-            await fs.promises.writeFile(this.path, productsString);
-            return "Producto agregado con éxito";
-          }
+            console.log(title, description, price, code, stock, category )
+            if (!fs.existsSync(this.path)) {
+                await fs.promises.writeFile(this.path, '[]');
+            }
+            const fileContent = await fs.promises.readFile(this.path, 'utf-8');
+            let content = JSON.parse(fileContent);
+            if (content.some((item) => item.code == code)) {
+                return `Error: Codigo ${code} repetido`;
+            } else if (!title || !description || !price || !code || !stock || !category) {
+                return "Error: todos los campos son requeridos";
+            } else if (typeof title !== 'string' || typeof description !== 'string' || typeof code !== 'string' || typeof category !== 'string' || isNaN(Number(price)) || isNaN(Number(stock))) {
+                return "Error: title, description, code, and category must be strings; price and stock must be valid numbers; status must be a boolean";
+            } else { 
+                let pid = 0
+                do {
+                    pid = String(Math.round(Math.random() * 100000))
+                } while (content.some((item) => item.id === pid));
+                const product = {
+                    title: String(title),
+                    description: String(description),
+                    price: Number(price),
+                    code: String(code),
+                    stock: Number(stock),
+                    status: Boolean(true),
+                    category: String(category),
+                    id: String(pid),
+                };
+                content.push(product);
+                const productsString = JSON.stringify(content);
+                await fs.promises.writeFile(this.path, productsString);
+                return "Producto agregado con exito";
+            }
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      }
+    } catch(error) {
+        console.error(`Error reading file at path ${this.path}: ${error}`);
+        return null;
+    }
 
     async getProducts() {
         try {
@@ -151,7 +141,7 @@ export default class ProductManager {
             const index = content.findIndex(p => p.id === id)
             if (index !== -1) {
                 content.splice(index, 1)
-                
+                console.log(content)
                 const updatedProductsString = JSON.stringify(content)
                 await fs.promises.writeFile(this.path, updatedProductsString)
                 return ("Eliminado correctamente")
@@ -164,4 +154,5 @@ export default class ProductManager {
         }
     }
 }
+
 

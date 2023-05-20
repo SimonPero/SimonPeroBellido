@@ -42,8 +42,7 @@ socketServer.on("connection", (socket) => {
       console.log("Deleting product with ID:", productId);
       console.log(await container.deleteProduct(productId));
       // Update product list after deleting a product
-      const productsList = await container.getProducts();
-      socketServer.emit("msg_back_to_front", productsList);
+      socketServer.emit("product_deleted", productId);
     } catch (error) {
       console.log(error);
     }
@@ -65,5 +64,5 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routes
 app.use("/api/products/", productsRouter);
 app.use("/api/carts/", cartsRouter);
-app.use("/", homeRouter);
+app.use("/", homeRouter); 
 app.use("/realtimeproducts", realTimeProdsRouters)
